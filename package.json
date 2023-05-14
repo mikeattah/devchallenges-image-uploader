@@ -1,15 +1,21 @@
 {
-  "name": "blogr-nextjs-prisma",
+  "name": "devchallenges-image-uploader",
   "version": "1.0.0",
-  "description": "How to Build a Full-Stack App with Next.js, Prisma, and Vercel Postgres",
+  "description": "My solution to DevChallenges Image Uploader challenge built with Next.js, Prisma, and Vercel Postgres",
   "scripts": {
     "dev": "next",
     "prebuild": "prisma generate",
     "build": "next build",
     "start": "next start"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "devchallenges",
+    "nextjs",
+    "prisma",
+    "vercel",
+    "postgresql"
+  ],
+  "author": "Michael Attah (mailenemona@gmail.com)",
   "license": "MIT",
   "dependencies": {
     "@next-auth/prisma-adapter": "^1.0.6",
@@ -17,8 +23,7 @@
     "next": "^13.4.2",
     "next-auth": "^4.22.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-markdown": "^8.0.7"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@types/node": "^20.1.3",
