@@ -3,9 +3,14 @@
 > cd devchallenges-image-uploader
 > npm install -D tailwindcss postcss autoprefixer
 > npx tailwindcss init -p
-> npm install cloudinary@1.25.0
+> npm install cloudinary formidable
 
 # Links:
 - challenge: https://devchallenges.io/challenges/O2iGT9yBd6xZBrOcVirx
 - example: https://github.com/fgiuliani/prisma-upload-image
 - tailwindcss: https://tailwindcss.com/docs/editor-setup
+- draganddrop: https://www.codemzy.com/blog/react-drag-drop-file-upload
+- mdn input element: https://developer.mozilla.org/en-US/docs/Web/API/File_API/Using_files_from_web_applications
+- formidable: https://www.npmjs.com/package/formidable
+- cloudinary: https://cloudinary.com/blog/guest_post/upload-and-display-images-using-prisma
+- cloudinary dashboard: https://console.cloudinary.com/console/c-b6fc00ec05b5da2831878d1716866a/getting-started

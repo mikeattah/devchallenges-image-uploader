@@ -22,7 +22,7 @@
     "baseUrl": ".",
     "paths": {
       "@components/*": ["./components/*"],
-      "@pages/*": utils/*es/*"],
+      "@pages/*": ["./pages/*"],
       "@prisma/*": ["./prisma/*"],
       "@public/*": ["./public/*"],
       "@utils/*": ["./utils/*"]

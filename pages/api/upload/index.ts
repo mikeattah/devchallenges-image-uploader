@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "utils/prisma";
 
 /**
- * POST /api/post
+ * POST /api/upload
  *
  * Update the API route to modify the database using Prisma Client
  *

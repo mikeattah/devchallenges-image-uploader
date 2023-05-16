@@ -3,7 +3,6 @@ import Router from "next/router";
 
 export type PostProps = {
   id: string;
-  title: string;
   user: {
     name: string;
     email: string;
