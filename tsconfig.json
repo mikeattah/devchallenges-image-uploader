@@ -22,10 +22,10 @@
     "baseUrl": ".",
     "paths": {
       "@components/*": ["./components/*"],
-      "@lib/*": ["./lib/*"],
-      "@pages/*": ["./pages/*"],
+      "@pages/*": utils/*es/*"],
       "@prisma/*": ["./prisma/*"],
-      "@public/*": ["./public/*"]
+      "@public/*": ["./public/*"],
+      "@utils/*": ["./utils/*"]
     }
   },
   "exclude": ["node_modules"],

@@ -1,0 +1,11 @@
+# Commands:
+> npx create-next-app --example https://github.com/mikeattah/blogr-nextjs-prisma/tree/main devchallenges-image-uploader
+> cd devchallenges-image-uploader
+> npm install -D tailwindcss postcss autoprefixer
+> npx tailwindcss init -p
+> npm install cloudinary@1.25.0
+
+# Links:
+- challenge: https://devchallenges.io/challenges/O2iGT9yBd6xZBrOcVirx
+- example: https://github.com/fgiuliani/prisma-upload-image
+- tailwindcss: https://tailwindcss.com/docs/editor-setup
