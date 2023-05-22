@@ -1,10 +1,10 @@
 import React from "react";
 import { GetServerSideProps } from "next";
 import Router from "next/router";
-import Layout from "@components/Layout";
-import { PostProps } from "@components/Post";
+import { Layout } from "@components/templates";
+import { PostProps } from "@components/molecules";
 import { useSession } from "next-auth/react";
-import prisma from "utils/prisma";
+import prisma from "@utils/prisma";
 
 export const getServerSideProps: GetServerSideProps<{
   post: PostProps;

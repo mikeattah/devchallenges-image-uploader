@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import prisma from "utils/prisma";
+import prisma from "@utils/prisma";
 
 /**
  * PUT /api/publish/:id

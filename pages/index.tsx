@@ -1,14 +1,14 @@
 import React from "react";
 import { GetStaticProps } from "next";
-import Layout from "@components/Layout";
-import Post, { PostProps } from "@components/Post";
-import prisma from "utils/prisma";
+import { Layout } from "@components/templates";
+import { Post, PostProps } from "@components/molecules";
+import prisma from "@utils/prisma";
 
 export const getStaticProps: GetStaticProps = async () => {
   const feed = await prisma.post.findMany({
-    where: { published: true },
+    where: { private: false },
     include: {
-      author: {
+      user: {
         select: { name: true },
       },
     },
@@ -23,35 +23,22 @@ type Props = {
   feed: PostProps[];
 };
 
-const Blog: React.FC<Props> = (props) => {
+const Home: React.FC<Props> = ({ feed }) => {
   return (
     <Layout>
-      <div className="page">
-        <h1>Public Feed</h1>
+      <div className="">
+        <h1>Public Images</h1>
         <main>
-          {props.feed.map((post) => (
-            <div key={post.id} className="post">
+          {feed.map((post) => (
+            <div key={post.id} className="">
               <Post post={post} />
             </div>
           ))}
         </main>
+        <p>Pagination (Pager Component)</p>
       </div>
-      <style jsx>{`
-        .post {
-          background: white;
-          transition: box-shadow 0.1s ease-in;
-        }
-
-        .post:hover {
-          box-shadow: 1px 1px 3px #aaa;
-        }
-
-        .post + .post {
-          margin-top: 2rem;
-        }
-      `}</style>
     </Layout>
   );
 };
 
-export default Blog;
+export default Home;

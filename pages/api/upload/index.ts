@@ -1,6 +1,6 @@
 import { getSession } from "next-auth/react";
 import { NextApiRequest, NextApiResponse } from "next";
-import prisma from "utils/prisma";
+import prisma from "@utils/prisma";
 
 /**
  * POST /api/upload
