@@ -14,3 +14,4 @@
 - formidable: https://www.npmjs.com/package/formidable
 - cloudinary: https://cloudinary.com/blog/guest_post/upload-and-display-images-using-prisma
 - cloudinary dashboard: https://console.cloudinary.com/console/c-b6fc00ec05b5da2831878d1716866a/getting-started
+- https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file

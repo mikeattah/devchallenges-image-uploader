@@ -1,21 +1,56 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Layout } from "@components/templates";
 import Router from "next/router";
 import Image from "next/image";
+import { validateFileType } from "@utils/validatefiletype";
+import { formatFileSize } from "@utils/formatfilesize";
 
 const Upload: React.FC = () => {
   const [image, setImage] = useState();
   const [description, setDescription] = useState("");
+  const [dragActive, setDragActive] = useState(false);
+  const inputRef = useRef(null);
 
   const handleChange = (e: React.ChangeEvent) => {
-    setImage(e.target.files[0]);
+    e.preventDefault();
+    if (e.target.files && e.target.files[0]) {
+      setImage(e.target.files[0]);
+      // handleFiles(e.target.files)
+    }
   };
 
-  /** Call File System to select image file for upload */
-  const handleClick = () => {};
+  /** Call file system to select image file for upload */
+  const handleClick = () => {
+    if (inputRef) {
+      inputRef.current.click();
+    } else {
+      return;
+    }
+  };
+
+  /** handle file drag events */
+  const handleDrag = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.type === "dragenter" || e.type === "dragover") {
+      setDragActive(true);
+    } else if (e.type === "dragleave") {
+      setDragActive(false);
+    }
+  };
+
+  /** handles file drop event */
+  const handleDrop = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(false);
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      // handleFiles(e.dataTransfer.files)
+    }
+  };
 
   /** Call API route to create a post */
-  const submitData = async (e: React.SyntheticEvent) => {
+  const uploadImage = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
     if (!image) {
@@ -40,51 +75,96 @@ const Upload: React.FC = () => {
   return (
     <Layout>
       <div className="">
-        <form onSubmit={submitData}>
-          <h1 className="">UPLOAD YOUR IMAGE</h1>
-          <p className="">File should be jpeg, png, ...</p>
+        <h1 className="">UPLOAD YOUR IMAGE</h1>
+        <p className="">File should be jpeg, png, ...</p>
+        <form
+          method="post"
+          encType="multipart/form-data"
+          id="form-upload-image"
+          onDragEnter={handleDrag}
+          onSubmit={uploadImage}
+        >
           <input
             id="input-upload-image"
-            onChange={(e) => handleChange(e)}
-            accept="image/jpg, image/png, image/jpeg, .gif, "
+            name="input-upload-image"
+            onChange={handleChange}
+            accept="image/*"
             type="file"
+            ref={inputRef}
+            className="opacity-0"
           />
           <label
             id="label-upload-image"
             htmlFor="input-upload-image"
-            title="Upload an image"
+            title="upload an image"
+            className={`general styles ${
+              dragActive ? "active styles" : "inactive styles"
+            }`}
           >
             <div className="">
               <Image
-                width="200"
-                height="150"
-                alt="Click to upload image"
-                src="@public/images/image.svg"
+                width="400"
+                height="300"
+                alt="click to upload image"
+                src={
+                  image
+                    ? URL.createObjectURL(image)
+                    : "@public/images/image.svg"
+                }
               />
-              <p className="">Drag & Drop your image here</p>
-              <button
-                type="button"
-                title="Click to upload image"
-                className=""
-              >OR</button>
+              {image ? (
+                validateFileType(image) ? (
+                  <small className="text-blue-500">
+                    File name: {image?.name} &#124; File size:{" "}
+                    {formatFileSize(image?.size)}
+                  </small>
+                ) : (
+                  <small className="text-red-500">
+                    {image?.name} is not a valid image file. Please select an
+                    image file.
+                  </small>
+                )
+              ) : (
+                <small className="text-black">
+                  No file currently selected for upload
+                </small>
+              )}
+              <button type="button" onClick={handleClick} className="">
+                Drag & Drop your image here
+              </button>
             </div>
           </label>
-          <button type="button" className="" onClick={handleClick}>
+          <p className="">OR</p>
+          <button type="button" onClick={handleClick} className="">
             CHOOSE A FILE
           </button>
           <textarea
-            cols={50}
             onChange={(e) => setDescription(e.target.value)}
-            placeholder="Description"
+            cols={50}
             rows={1}
+            placeholder="Description"
             value={description}
           />
           <div className="">
-            <input disabled={!description} type="submit" value="UPLOAD" />
-            <a className="" href="#" onClick={() => Router.push("/")}>
+            <input
+              disabled={!description || !image}
+              type="submit"
+              value="UPLOAD"
+            />
+            <a href="#" onClick={() => Router.push("/")} className="">
               CANCEL
             </a>
           </div>
+          {dragActive && (
+            <div
+              id="drag-file-element"
+              onDragEnter={handleDrag}
+              onDragLeave={handleDrag}
+              onDragOver={handleDrag}
+              onDrop={handleDrop}
+              className="absolute h-100 w-100 border"
+            ></div>
+          )}
         </form>
       </div>
     </Layout>
