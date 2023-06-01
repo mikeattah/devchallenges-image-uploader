@@ -1,11 +1,12 @@
 import React from "react";
 import { GetStaticProps } from "next";
-import { Layout } from "@components/templates";
+import { Pagination } from "flowbite-react";
 import { Post, PostProps } from "@components/molecules";
+import { Layout } from "@components/templates";
 import prisma from "@utils/prisma";
 
 export const getStaticProps: GetStaticProps = async () => {
-  const feed = await prisma.post.findMany({
+  const images = await prisma.post.findMany({
     where: { private: false },
     include: {
       user: {
@@ -14,29 +15,27 @@ export const getStaticProps: GetStaticProps = async () => {
     },
   });
   return {
-    props: { feed: feed },
+    props: { images: images },
     revalidate: 10,
   };
 };
 
 type Props = {
-  feed: PostProps[];
+  images: PostProps[];
 };
 
-const Home: React.FC<Props> = ({ feed }) => {
+const Home: React.FC<Props> = ({ images }) => {
   return (
     <Layout>
+      <h1 className="">Public Images</h1>
       <div className="">
-        <h1>Public Images</h1>
-        <main>
-          {feed.map((post) => (
-            <div key={post.id} className="">
-              <Post post={post} />
-            </div>
-          ))}
-        </main>
-        <p>Pagination (Pager Component)</p>
+        {images.map((post) => (
+          <div key={post.id} className="">
+            <Post post={post} />
+          </div>
+        ))}
       </div>
+      <Pagination currentPage={} onPageChange={} totalPages={} className="" />
     </Layout>
   );
 };

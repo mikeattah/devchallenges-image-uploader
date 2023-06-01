@@ -16,7 +16,10 @@ export type PostProps = {
 const Post: React.FC<{ post: PostProps }> = ({ post }) => {
   const userName = post.user ? post.user.name : "Unknown User";
   return (
-    <div onClick={() => Router.push("/p/[id]", `/p/${post.id}`)}>
+    <div
+      onClick={() => Router.push("/img/[id]", `/img/${post.id}`)}
+      className=""
+    >
       <Image
         height="300"
         width="400"
@@ -24,8 +27,10 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
         alt={post.description}
         fill={true}
       />
-      <small className="">Uploaded by {userName}</small>
-      <small className="">{post.description}</small>
+      <div className="">
+        <p className="">Uploaded by {userName}</p>
+        <p className="">{post.description}</p>
+      </div>
     </div>
   );
 };

@@ -7,11 +7,21 @@
 
 # Links:
 - challenge: https://devchallenges.io/challenges/O2iGT9yBd6xZBrOcVirx
-- example: https://github.com/fgiuliani/prisma-upload-image
-- tailwindcss: https://tailwindcss.com/docs/editor-setup
+- example:
+    - https://github.com/fgiuliani/prisma-upload-image
+    - XXX
+- tailwindcss: https://tailwindcss.com/docs/transition-duration
 - draganddrop: https://www.codemzy.com/blog/react-drag-drop-file-upload
 - mdn input element: https://developer.mozilla.org/en-US/docs/Web/API/File_API/Using_files_from_web_applications
 - formidable: https://www.npmjs.com/package/formidable
 - cloudinary: https://cloudinary.com/blog/guest_post/upload-and-display-images-using-prisma
 - cloudinary dashboard: https://console.cloudinary.com/console/c-b6fc00ec05b5da2831878d1716866a/getting-started
 - https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file
+- https://javascript.info/formdata
+- https://developer.mozilla.org/en-US/docs/Web/API/FormData
+- https://flowbite.com/docs/forms/radio/
+- https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/radio
+- flowbite:
+    - https://flowbite.com/docs/getting-started/quickstart/
+    - https://flowbite.com/docs/getting-started/typescript/
+    - https://flowbite.com/docs/getting-started/next-js/

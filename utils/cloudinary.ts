@@ -1,3 +1,5 @@
+import { ImageFile } from "./validatefiletype";
+
 const cloudinary = require("cloudinary").v2;
 
 cloudinary.config({
@@ -6,7 +8,7 @@ cloudinary.config({
   api_secret: process.env.CLOUD_API_SECRET,
 });
 
-export function uploadImage(image) {
+export function uploadImage(image: ImageFile) {
   return new Promise((resolve, reject) => {
     cloudinary.uploader.upload(
       image,

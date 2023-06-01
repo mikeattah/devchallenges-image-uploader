@@ -12,15 +12,15 @@ const fileTypes = [
   "image/x-icon",
 ];
 
-type File = {
+export type ImageFile = {
   name: string;
   lastModified: number;
-  lastModifiedDate: Date;
+  lastModifiedDate?: Date;
   size: number;
   type: string;
   webkitRelativePath?: string;
 };
 
-export const validateFileType = (file: File) => {
+export const validateFileType = (file: ImageFile) => {
   return fileTypes.includes(file.type);
 };

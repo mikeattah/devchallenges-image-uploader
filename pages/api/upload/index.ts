@@ -1,5 +1,6 @@
 import { getSession } from "next-auth/react";
 import { NextApiRequest, NextApiResponse } from "next";
+import { uploadImage } from "@utils/cloudinary";
 import prisma from "@utils/prisma";
 
 /**
@@ -19,14 +20,17 @@ export default async function handle(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { title, content } = req.body;
+  const { formData } = req.body;
 
   const session = await getSession({ req });
+  const cloud = await uploadImage(formData.image);
+
   const result = await prisma.post.create({
     data: {
-      title: title,
-      content: content,
-      author: { connect: { email: session?.user?.email! } },
+      ...cloud,
+      description: formData.description,
+      private: false,
+      user: { connect: { email: session?.user?.email! } },
     },
   });
   res.json(result);
