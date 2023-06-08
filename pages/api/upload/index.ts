@@ -1,6 +1,6 @@
 import { getSession } from "next-auth/react";
 import { NextApiRequest, NextApiResponse } from "next";
-import { uploadImage } from "@utils/cloudinary";
+import { UploadApiResponse, uploadImage } from "@utils/cloudinary";
 import prisma from "@utils/prisma";
 
 /**
@@ -22,16 +22,28 @@ export default async function handle(
 ) {
   const { formData } = req.body;
 
+  // get user session
   const session = await getSession({ req });
-  const cloud = await uploadImage(formData.image);
 
+  // upload image file to cloudinary server
+  const image = (await uploadImage(
+    URL.createObjectURL(formData.image)
+  )) as UploadApiResponse;
+
+  // post image details to database
   const result = await prisma.post.create({
     data: {
-      ...cloud,
+      id: image.asset_id || image.signature,
+      publicId: image.public_id,
+      url: image.secure_url,
+      format: image.format,
+      version: image.version,
+      createdAt: image.created_at,
       description: formData.description,
-      private: false,
+      private: formData.privacy,
       user: { connect: { email: session?.user?.email! } },
     },
   });
+  // send image details to client
   res.json(result);
 }

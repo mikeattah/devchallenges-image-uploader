@@ -17,9 +17,10 @@ datasource db {
 model Post {
   id                  String    @id @default(cuid())
   publicId            String    @unique
+  url                 String
   format              String
-  version             String
-  imageUrl            String
+  version             Int
+  createdAt           DateTime  @default(now())
   description         String
   private             Boolean   @default(false)
   user                User?     @relation(fields: [userId], references: [id])

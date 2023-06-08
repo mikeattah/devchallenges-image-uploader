@@ -1,8 +1,8 @@
 import React, { useRef, useState } from "react";
 import Router from "next/router";
 import Image from "next/image";
-import "flowbite";
-// import type { Post } from "@prisma/client";
+// import "flowbite";
+import type { Post } from "@prisma/client";
 import { Layout } from "@components/templates";
 import { formatFileSize } from "@utils/formatfilesize";
 import { ImageFile, validateFileType } from "@utils/validatefiletype";
@@ -17,12 +17,13 @@ const Upload: React.FC = () => {
   const [description, setDescription] = useState("");
   const [dragActive, setDragActive] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  let imageBlob;
 
+  /**  Save uploaded image to `image` state */
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     if (e.currentTarget.files && e.currentTarget.files[0]) {
       setImage(e.currentTarget.files[0]);
-      // handleFiles(e.target.files)
     }
   };
 
@@ -35,7 +36,7 @@ const Upload: React.FC = () => {
     }
   };
 
-  /** handle file drag events */
+  /** Handle file drag events: set `dragActive` state */
   const handleDrag = (e: React.DragEvent<HTMLDivElement | HTMLFormElement>) => {
     e.preventDefault();
     e.stopPropagation();
@@ -46,33 +47,34 @@ const Upload: React.FC = () => {
     }
   };
 
-  /** handles file drop event */
+  /** Handle file drop event: save uploaded image to `image` state */
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
     setDragActive(false);
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      // handleFiles(e.currentTarget.files)
+      setImage(e.dataTransfer.files[0]);
     }
   };
 
-  /** Call API route to create a post */
+  /** Call API route to upload image to cloud and database */
   const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formElem = document.getElementById("form-upload-image") as
-      | HTMLFormElement
-      | undefined;
 
     if (!image.name || !validateFileType(image)) {
       return;
     }
 
     try {
+      const formElem = document.getElementById("form-upload-image") as
+        | HTMLFormElement
+        | undefined;
       const inputElem = document.getElementById(
         "input-upload-image"
       ) as HTMLInputElement;
-      const imageBlob = await fetch(inputElem.value).then((res) => res.blob());
       const formData = new FormData(formElem);
+
+      imageBlob = await fetch(inputElem.value).then((res) => res.blob());
       formData.append("image", imageBlob, image.name);
 
       const response = await fetch("/api/upload", {
@@ -122,8 +124,8 @@ const Upload: React.FC = () => {
                 height="300"
                 alt="click to upload image"
                 src={
-                  image.name
-                    ? URL.createObjectURL(image)
+                  imageBlob
+                    ? URL.createObjectURL(imageBlob)
                     : "@public/images/image.svg"
                 }
               />

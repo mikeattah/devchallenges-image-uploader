@@ -9,7 +9,7 @@
 - challenge: https://devchallenges.io/challenges/O2iGT9yBd6xZBrOcVirx
 - example:
     - https://github.com/fgiuliani/prisma-upload-image
-    - XXX
+    - https://github.com/cloudinary/cloudinary_npm/tree/master/samples/photo_album
 - tailwindcss: https://tailwindcss.com/docs/transition-duration
 - draganddrop: https://www.codemzy.com/blog/react-drag-drop-file-upload
 - mdn input element: https://developer.mozilla.org/en-US/docs/Web/API/File_API/Using_files_from_web_applications

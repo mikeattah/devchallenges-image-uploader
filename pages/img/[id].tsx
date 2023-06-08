@@ -11,31 +11,18 @@ import prisma from "@utils/prisma";
 export const getServerSideProps: GetServerSideProps<{
   post: PostProps;
 }> = async ({ params }) => {
-  const image = (await prisma.post.findUnique({
+  const image = await prisma.post.findUnique({
     where: { id: String(params?.id) },
     include: {
       user: {
         select: { name: true, email: true },
       },
     },
-  })) as PostProps;
+  });
   return {
     props: { image: image },
   };
 };
-
-/**
- * Remove??? Upload an image via API route
- *
- * @param id
- */
-async function handleUpload(id: string): Promise<void> {
-  await fetch(`/api/upload/${id}`, {
-    method: "PUT",
-  });
-  await Router.push("/");
-  // Router.back;
-}
 
 /**
  * Delete an image via API route
@@ -57,8 +44,9 @@ const ViewImage: React.FC<PostProps> = (props) => {
   const userHasValidSession = Boolean(session);
   const postBelongsToUser = session?.user?.email === props.user?.email;
   const [copied, setCopied] = useState(false);
+  const [privacy, setPrivacy] = useState(props.private);
 
-  /** copy image url to clipboard */
+  /** Copy image url to clipboard */
   const handleCopy = () => {
     if (!navigator.clipboard) {
       return;
@@ -74,8 +62,16 @@ const ViewImage: React.FC<PostProps> = (props) => {
     );
   };
 
-  /** toggle image visibility between public and private */
-  const handleVisibility = (id: string) => {};
+  /** toggle image privacy between public and private */
+  const handlePrivacy = async (id: string) => {
+    const update = await prisma.post.update({
+      where: { id: id },
+      data: {
+        private: !privacy,
+      },
+    });
+    setPrivacy(update.privacy);
+  };
 
   return (
     <Layout>
@@ -108,10 +104,10 @@ const ViewImage: React.FC<PostProps> = (props) => {
           <div className="">
             <button
               type="button"
-              onClick={() => handleVisibility(props.id)}
+              onClick={() => handlePrivacy(props.id)}
               className=""
             >
-              {props.private ? "Public" : "Private"}
+              {props.private ? "Private" : "Public"}
             </button>
             <button
               type="button"
